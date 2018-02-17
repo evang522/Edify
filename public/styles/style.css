@@ -1,51 +1,54 @@
-.module-container-home {
+.home-modules-container {
     display:flex;
-    align-content:center;
-    flex-direction:column;
-    /* margin:0 auto;
-    width:99%; */
-}
-/* 
-.home-tile-text {
-    display:inline-block;
-    max-width:80%;
-} */
-
-
-/* PRAYER-HTML-HEADER */
-
-
-.topnav {
-    position:fixed;
-    z-index:1;
-}
-
-
-
-.header-logo {
-    line-height:1.5em;
-    font-weight:bold;
-
-}
-
-.prayer-card-container {
-    margin-top:3em;
-    display:flex;
-    flex-direction:row;
-    justify-content:center;
     flex-wrap:wrap;
+    justify-content:center;
 }
 
- .tile-class-centerfix {
-     display:block;
-     margin:0 auto;
-     max-width:400px !important;
- }
+.card {
+    margin:1em;
+}
 
- .row .col.s4 {
-    width:100% !important;
- }
+.prayer-card {
+    min-width:25%;
+}
 
- .card-content {
-     height:20em !important;
- }
+.bg-darkgreen {
+    background-color:#04911b;
+    height:2.5em;
+}
+
+.back-button {
+    margin:4px;
+}
+
+.prequest-container {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.submit-prequest-form {
+    display:flex;
+    flex-direction:column;
+}
+
+.prayer-card-add {
+    background-color:#7dafce;
+}
+
+.submit-prequest-button {
+    margin-top:5px;
+}
+
+.prayer-card-add input, textarea {
+    border:none;
+    border-radius:3px;
+}
+
+.prayer-card-add button {
+    width:70%;
+}
+
+center {
+    align-self:center;
+}

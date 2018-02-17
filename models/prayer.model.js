@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
-const prayerSchema = mongoose.Schema({
+const prayerSchema = new mongoose.Schema({
   title: {
     type:String,
     unique:true,
-    default:'New Prayer Request'
+    default:'New Prayer Request',
+    index:true
   },
   archived: {
     type:Boolean,
@@ -16,11 +17,28 @@ const prayerSchema = mongoose.Schema({
   },
   requestbody: {
     type:String,
-    required:true
+    required:true,
+    index:true
+  },
+  created: {
+    type:Date,
+    default:Date.now
   },
   author: {
     type:String
   }
 });
+
+prayerSchema.set('autoindex', false);
+
+prayerSchema.set('toObject', {
+
+  transform: function (doc,ret) {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
+  }
+});
+
 
 module.exports = mongoose.model('prequest', prayerSchema);
