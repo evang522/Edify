@@ -1,0 +1,42 @@
+.module-container-home {
+    display:flex;
+    align-content:center;
+    flex-direction:column;
+    /* margin:0 auto;
+    width:99%; */
+}
+
+.home-tile-text {
+    display:inline-block;
+    max-width:80%;
+}
+
+
+/* PRAYER-HTML-HEADER */
+
+
+.topnav {
+    position:fixed;
+    z-index:1;
+}
+
+
+
+.header-logo {
+    line-height:1.5em;
+    font-weight:bold;
+
+}
+
+.prayer-card-container {
+    margin-top:3em;
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+ .tile-class-centerfix {
+     display:block;
+     margin:0 auto;
+ }

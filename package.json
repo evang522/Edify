@@ -1,0 +1,22 @@
+{
+  "name": "edify",
+  "version": "1.0.0",
+  "description": "Church Communication app.",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongoose": "^5.0.6",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://evang522@bitbucket.org/evang522/edify.git"
+  },
+  "author": "Evan Garrett",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/evang522/edify#readme"
+}
