@@ -5,11 +5,11 @@
     /* margin:0 auto;
     width:99%; */
 }
-
+/* 
 .home-tile-text {
     display:inline-block;
     max-width:80%;
-}
+} */
 
 
 /* PRAYER-HTML-HEADER */
@@ -39,4 +39,13 @@
  .tile-class-centerfix {
      display:block;
      margin:0 auto;
+     max-width:400px !important;
+ }
+
+ .row .col.s4 {
+    width:100% !important;
+ }
+
+ .card-content {
+     height:20em !important;
  }

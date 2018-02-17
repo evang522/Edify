@@ -1,25 +1,15 @@
-const mongoose = require('mongoose');
+const express = require('express');
+const router = express.Router();
 
-const prayerSchema = mongoose.Schema({
-    title: {
-        type:String,
-        unique:true,
-        default:'New Prayer Request'
-    },
-    archived: {
-        type:Boolean,
-        default:false
-    },
-    status: {
-        enum: ['Standing','Answered'],
-    },
-    requestbody: {
-        type:String,
-        required:true
-    },
-    author: {
-        type:String
-    }
+// Bring in Models
+const Prayer = require('../models/prayer.model');
+
+router.get('/prequest', (req,res,next) => {
+  Prayer.find()
+    .then((prequests) => {
+      res.json(prequests);
+    });
 });
 
-module.exports = mongoose.model('prequest', prayerSchema);
+
+module.exports = router;
