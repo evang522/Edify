@@ -1,39 +1,39 @@
 [
   {
-    "title":"This is a new Prayer6",
+    "title":"Mother's Health",
     "status":"Standing",
-    "requestbody":"I am struggling with depression",
-    "author":"jim"
+    "requestbody":"My mom has been battling cancer. If you want more information you can email me: MaryLou@gmail.com",
+    "author":"Mary Lou"
   },
   {
-    "title":"This is a new Prayer5",
+    "title":"Car Issues",
     "status":"Standing",
-    "requestbody":"I am struggling with depression",
-    "author":"jim"
+    "requestbody":"My car is not doing well and I am totally dependent upon it to get to work. Please pray that God would help me find a solution to this problem that doesn't break my bank.",
+    "author":"Kevin Henderson"
   },
   {
-    "title":"This is a new Prayer4",
+    "title":"The Flue",
     "status":"Standing",
-    "requestbody":"I am struggling with depression",
-    "author":"jim"
+    "requestbody":"I have contracted the fle from the kids at school. Please pray God would help me get past this, as I need to be at work tommorow.",
+    "author":"Lila Gonan"
   },
   {
-    "title":"This is a new Prayer3",
+    "title":"Pray for Non-believers",
     "status":"Standing",
-    "requestbody":"I am struggling with depression",
-    "author":"jim"
+    "requestbody":"Please pray that all of the unbelieving at UGA and otherwise would come to see the Lord, and that God would use us as witnesses to them.",
+    "author":"Dan Crezcenso"
   },
   {
-    "title":"This is a new Prayer2",
+    "title":"Job interviews",
     "status":"Standing",
-    "requestbody":"I am struggling with depression",
-    "author":"jim"
+    "requestbody":"I have several Job interviews coming up that will determine whether or not I can go to Germany for work. Please pray God will give me confidence in this.",
+    "author":"Evan Garrett"
   },
   {
-    "title":"This is a new Prayer1",
+    "title":"Work Schedule",
     "status":"Standing",
-    "requestbody":"I am struggling with depression",
-    "author":"jim"
+    "requestbody":"Pray that God Would give me rest from work so that I can take some time to spend with him.",
+    "author":"Jill Neben"
   }
 
 ]

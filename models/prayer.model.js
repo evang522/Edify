@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const prayerSchema = new mongoose.Schema({
   title: {
     type:String,
-    unique:true,
     default:'New Prayer Request',
     index:true
   },
@@ -18,7 +17,6 @@ const prayerSchema = new mongoose.Schema({
   requestbody: {
     type:String,
     required:true,
-    index:true
   },
   created: {
     type:Date,

@@ -69,7 +69,7 @@ const dom = function () {
           </div>
           <div class=prequest-comments>
           <form class='prequest-comment-form'>
-            <label for='prequest-comment-input'>Add Comment</label>
+            <label for='prequest-comment-input'>Add Comment:</label>
             <input id = 'prequest-comment-input' class='prequest-comment-input'>
           </form>
           <ul class="list-group prequest-comment bg-info">
