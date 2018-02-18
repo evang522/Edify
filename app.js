@@ -22,18 +22,19 @@ app.use(express.static('public'));
 // Mount Routes
 app.use('/api', prayerRouter);
 
+// Redirect traffic from main route to home 
+app.get('/', (req,res) => {
+  res.redirect('/home');
+});
 
 // Home Router
 app.get('/home', (req,res,next) => {
-  res.sendFile(path.join('./public','index.html'))
-    .catch(err => {
-      next(err);
-    });
+  res.sendFile(path.join(__dirname +'/views/index.html'));
 });
 
 // Prayer request View Route
 app.get('/prayer', (req,res,next) => {
-  res.sendFile(path.join(__dirname, '/public/prayer.html'));
+  res.sendFile(path.join(__dirname + '/views/prayer.html'));
 });
 
 

@@ -9,16 +9,26 @@ const api = function () {
   const createPrequest = (data,callback) => {
     $.ajax({
       url:'/api/prequest',
-      method:'POST',
+      type:'POST',
       contentType:'application/json',
-      data:data,
+      data:JSON.stringify(data),
+      success:callback
+    });
+  };
+
+  const deletePrequest = (id,callback) => {
+    $.ajax({
+      url:'/api/prequest/' + id,
+      type:'DELETE',
+      contentType:'application/json',
       success:callback
     });
   };
 
   return {
     fetch,
-    createPrequest
+    createPrequest,
+    deletePrequest
   };
 
 }();

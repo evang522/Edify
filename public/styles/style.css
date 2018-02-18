@@ -9,7 +9,8 @@
 }
 
 .prayer-card {
-    min-width:25%;
+    min-width:30% !important;
+    width:25%;
 }
 
 .bg-darkgreen {
@@ -52,3 +53,10 @@
 center {
     align-self:center;
 }
+
+@media only screen and (max-width: 700px) {
+
+    .prayer-card {
+        min-width:95% !important;
+    }
+} 

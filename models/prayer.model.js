@@ -25,7 +25,12 @@ const prayerSchema = new mongoose.Schema({
     default:Date.now
   },
   author: {
-    type:String
+    type:String,
+    default:'Evan Garrett'
+  },
+  comments: {
+    type:Array,
+    default:[]
   }
 });
 

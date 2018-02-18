@@ -3,7 +3,8 @@ const store = function () {
 
 
   return {
-    prequests:[]
+    prequests:[],
+    currentPrequest:''
   };
 
 }();

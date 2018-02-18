@@ -40,7 +40,6 @@ router.get('/prequest/:id', (req,res,next) => {
 });
 
 router.post('/prequest', (req,res,next) => {
-
   const newObj = {};
   const requiredFields = ['title','requestbody'];
 
@@ -95,4 +94,18 @@ router.put('/prequest/:id', (req,res,next) => {
 
 });
 
+
+router.delete('/prequest/:id', (req,res,next) => {
+  const {id} =req.params;
+
+  Prayer.findByIdAndRemove(id)
+    .then((response) => {
+      if (response === null) {
+        const err = new Error('Prayer request with this ID could not be found');
+        err.status = 404;
+        return next(err);
+      }
+      res.status(204).end();
+    });
+});
 module.exports = router;
