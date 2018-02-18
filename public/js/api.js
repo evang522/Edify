@@ -3,12 +3,12 @@
 const api = function () {
 
   const fetch = (callback) => {
-    $.getJSON('/api/prequest', callback);
+    $.getJSON('/api/prequests', callback);
   };
 
   const createPrequest = (data,callback) => {
     $.ajax({
-      url:'/api/prequest',
+      url:'/api/prequests',
       type:'POST',
       contentType:'application/json',
       data:JSON.stringify(data),
@@ -18,17 +18,30 @@ const api = function () {
 
   const deletePrequest = (id,callback) => {
     $.ajax({
-      url:'/api/prequest/' + id,
+      url:'/api/prequests/' + id,
       type:'DELETE',
       contentType:'application/json',
       success:callback
     });
   };
 
+
+  const addComment = (id,data,callback) => {
+    $.ajax({
+      url:'/api/prequests/comments/'+id,
+      contentType:'application/json',
+      type:'PUT',
+      data: JSON.stringify(data),
+      success:callback
+    });
+  };
+
+
   return {
     fetch,
     createPrequest,
-    deletePrequest
+    deletePrequest,
+    addComment
   };
 
 }();

@@ -4,7 +4,7 @@ const router = express.Router();
 // Bring in Models
 const Prayer = require('../models/prayer.model');
 
-router.get('/prequest', (req,res,next) => {
+router.get('/prequests', (req,res,next) => {
   const filter = {};
   const { searchTerm } = req.query;
   const projection = {};
@@ -16,7 +16,7 @@ router.get('/prequest', (req,res,next) => {
     .catch(next);
 });
 
-router.get('/prequest/:id', (req,res,next) => {
+router.get('/prequests/:id', (req,res,next) => {
   const {id} = req.params;
 
   Prayer.findById(id)
@@ -39,7 +39,7 @@ router.get('/prequest/:id', (req,res,next) => {
     });
 });
 
-router.post('/prequest', (req,res,next) => {
+router.post('/prequests', (req,res,next) => {
   const newObj = {};
   const requiredFields = ['title','requestbody'];
 
@@ -63,7 +63,7 @@ router.post('/prequest', (req,res,next) => {
 });
 
 
-router.put('/prequest/:id', (req,res,next) => {
+router.put('/prequests/:id', (req,res,next) => {
   const {id} = req.params;
   const updateObj = {};
   const updateableFields = ['title','requestbody'];
@@ -95,7 +95,7 @@ router.put('/prequest/:id', (req,res,next) => {
 });
 
 
-router.delete('/prequest/:id', (req,res,next) => {
+router.delete('/prequests/:id', (req,res,next) => {
   const {id} =req.params;
 
   Prayer.findByIdAndRemove(id)
@@ -108,4 +108,34 @@ router.delete('/prequest/:id', (req,res,next) => {
       res.status(204).end();
     });
 });
+
+
+// COMMENT ROUTES
+
+router.put('/prequests/comments/:id', (req,res,next) => {
+  const {id} = req.params;
+  const {message} = req.body;
+  
+  if (!message) {
+    const err = new Error('Missing Message Field');
+    err.status = 400;
+    return next(err);
+  }
+
+  Prayer.findByIdAndUpdate(id, {$push: {'comments':{'message':message, author:'Evan Garrett', created:Date.now()}}}, {new:true})
+    .then(response => {
+      if (response === null) {
+        const err = new Error('The Prayer Request with this ID could not be found');
+        err.status = 404;
+        return next(err);
+      }
+      res.status(200).json(response);
+    })
+    .catch(next);
+
+});
+
 module.exports = router;
+
+
+

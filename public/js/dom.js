@@ -6,8 +6,8 @@ const dom = function () {
 
 
   const generatePrequestString = (listOfPrequests) => {
-    let domString = `
-    <div class="card prayer-card prayer-card-add">
+    let domString = '';
+    domString += `<div class="card prayer-card prayer-card-add">
       <div class="card-body">
         <h5 class="card-title">Add Prayer Request</h4>
         <form class='submit-prequest-form'>
@@ -45,8 +45,14 @@ const dom = function () {
   }; 
 
   const generateIndividualPrequestString = (request) => {
-    return  `
-    <div data-id = '${request.id}' class="card h75 individual-prayer-card">
+    let commentString = '';
+    if (request.comments.length) {
+      request.comments.forEach((comment) => {
+        commentString += `<li class='prequest-comment list-group-item'>${comment.author} : ${comment.message} -- <i>${moment(request.created).calendar()}</i></li>`;
+      });
+    }
+
+    return  `<div data-id = '${request.id}' class="card h75 individual-prayer-card">
           <div class="card-body">
               <h5 class="card-title">${request.title}</h4>
               <p class="card-text">
@@ -59,7 +65,16 @@ const dom = function () {
                   <br>
                   <br>
               <a href="/prayer" class="btn btn-info js-back-to-main-button">Back</a>
+              <a href="/prayer" class="btn btn-danger js-delete-prequest">Delete</a>
           </div>
+          <div class=prequest-comments>
+          <form class='prequest-comment-form'>
+            <label for='prequest-comment-input'>Add Comment</label>
+            <input id = 'prequest-comment-input' class='prequest-comment-input'>
+          </form>
+          <ul class="list-group prequest-comment bg-info">
+         </ul>
+        ${commentString}
       </div>`;
   };
 
@@ -76,11 +91,14 @@ const dom = function () {
       const title = $('.submit-prequest-title').val();
       const requestbody = $('.submit-prequest-body').val();
 
+      if ( !title || !requestbody) {
+        return null;
+      }
+
       const newItem = {
         'title':title,
         'requestbody':requestbody
       };
-      console.log(newItem);
       // Send to Server
       api.createPrequest(newItem, (data) => {
         store.prequests.push(data);
@@ -101,7 +119,6 @@ const dom = function () {
 
   const handleViewPrequest = () => {
     $('.prequest-container').on('click', '.view-request', (event) => {
-      console.log('handleViewIndividual is working!');
 
       event.preventDefault();
       let id =  $(event.target).closest('.prayer-card').attr('data-id');
@@ -109,14 +126,42 @@ const dom = function () {
         return request.id === id;
       });
       store.currentPrequest = currentRequest;
-
       render();
+    });
+  };
+
+
+  const handleNewComment = () => {
+    $('.individual-prequest-view').on('submit', '.prequest-comment-form', (event) => {
+      event.preventDefault();
+      const message =  $('.prequest-comment-input').val();
+      const id = $(event.target).closest('.individual-prayer-card').attr('data-id');
+      api.addComment(id,{message},(response) => {
+        store.currentPrequest.comments.push({'message':message, author:'Evan Garrett'});
+        dom.render(store.currentPrequest);
+      });
+    });
+  };
+
+  const handleDeletePrequest = () => {
+    $('.individual-prequest-view').on('click', '.js-delete-prequest', (event) => {
+      event.preventDefault();
+      const id = $(event.target).closest('.individual-prayer-card').attr('data-id');
+
+      api.deletePrequest(id, (response) => {
+        console.log(response);
+        store.currentPrequest = '';
+        store.prequests = store.prequests.filter((request) => {
+          return request.id !== id;
+        });
+        $('.individual-prequest-view').html('');
+        render();        
+      });
     });
   };
 
   const render = () => {
     if (store.currentPrequest) {
-      console.log('render chose the option with a single note');
       let domString = generateIndividualPrequestString(store.currentPrequest);
       renderIndividualPrequest(domString);
     } else {
@@ -129,6 +174,8 @@ const dom = function () {
     handleNewPrequest();
     handleViewPrequest();
     handleReturnToMainPrequest();
+    handleNewComment();
+    handleDeletePrequest();
   };
 
   return{
