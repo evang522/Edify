@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const convertUrl = require('../js/urlconverter');
 
 // Bring in Models
 const Prayer = require('../models/prayer.model');
@@ -10,6 +11,7 @@ router.get('/prequests', (req,res,next) => {
   const projection = {};
 
   Prayer.find(filter, projection)
+    .populate('author')
     .sort({created:-1})
     .then((prequests) => {
       res.json(prequests);
@@ -21,6 +23,7 @@ router.get('/prequests/:id', (req,res,next) => {
   const {id} = req.params;
 
   Prayer.findById(id)
+    .populate(author)
     .then((prequest) => {
         
       if (prequest === null) {
@@ -50,12 +53,16 @@ router.post('/prequests', (req,res,next) => {
       err.status = 400;
       return next(err);
     }
-    newObj[field] = req.body[field];
+    newObj[field] = convertUrl(req.body[field]);
   });
 
   Prayer.create(newObj)
     .then((response) => {
-      res.status(201).json(response);
+      return Prayer.findById(response.id)
+        .populate('author')
+        .then((prayer) => {
+          res.status(201).json(prayer);
+        });
     })
     .catch(err => {
       next(err);
@@ -71,7 +78,7 @@ router.put('/prequests/:id', (req,res,next) => {
 
   updateableFields.forEach((field) => {
     if (field in req.body) {
-      updateObj[field] = req.body[field];
+      updateObj[field] = convertUrl(req.body[field]);
     }
   });
 
@@ -82,7 +89,11 @@ router.put('/prequests/:id', (req,res,next) => {
         err.status = 404;
         return next(err);
       }
-      res.status(200).json(response);
+      return Prayer.findById(response.id)
+        .populate('author')
+        .then((prayer) => {
+          res.status(201).json(prayer);
+        });
     })
     .catch(err => {
       if (err.path === '_id') {

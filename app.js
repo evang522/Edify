@@ -11,6 +11,7 @@ const path = require('path');
 // Define Routes
 const prayerRouter = require('./routes/prayer.router');
 const NeedsRouter = require('./routes/needs.router');
+const userRouter = require('./routes/users.router');
 
 // Set Middleware
 app.use(express.json());
@@ -23,6 +24,7 @@ app.use(express.static('public'));
 // Mount Routes
 app.use('/api', prayerRouter);
 app.use('/api', NeedsRouter);
+app.use('/api', userRouter);
 
 // Redirect traffic from main route to home 
 app.get('/', (req,res) => {

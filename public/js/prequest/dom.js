@@ -20,6 +20,7 @@ const dom = function () {
       </div>
     </div>`;
     domString += listOfPrequests.map((request) => {
+      console.log(request);
       return `
       <div data-id = '${request.id}' class="card prayer-card">
             <div class="card-body">
@@ -27,7 +28,7 @@ const dom = function () {
                 <p class="card-text">
                     ${request.requestbody}
                     <div class='prayer-author'>
-                        <b>Posted by: ${request.author}</b>
+                        <b>Posted by: ${request.author.name}</b>
                     </div>
                     <br>
                     ${moment(request.created).calendar()}
@@ -48,7 +49,7 @@ const dom = function () {
     let commentString = '';
     if (request.comments.length) {
       request.comments.forEach((comment) => {
-        commentString += `<li class='prequest-comment list-group-item'><b>${comment.author}</b> : ${comment.message} -- <i>${moment(request.created).calendar()}</i></li>`;
+        commentString += `<li class='prequest-comment list-group-item'><b>${comment.author.name}</b> : ${comment.message} -- <i>${moment(request.created).calendar()}</i></li>`;
       });
     }
 
@@ -58,7 +59,7 @@ const dom = function () {
               <p class="card-text">
                   ${request.requestbody}
                   <div class='prayer-author'>
-                      <b>Posted by: ${request.author}</b>
+                      <b>Posted by: ${request.author.name}</b>
                   </div>
                   <br>
                   ${moment(request.created).calendar()}
@@ -149,7 +150,6 @@ const dom = function () {
       const id = $(event.target).closest('.individual-prayer-card').attr('data-id');
 
       api.deletePrequest(id, (response) => {
-        console.log(response);
         store.currentPrequest = '';
         store.prequests = store.prequests.filter((request) => {
           return request.id !== id;

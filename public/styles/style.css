@@ -33,6 +33,16 @@
     flex-direction:column;
 }
 
+.submit-prequest-form input {
+    padding-left:7px;
+    height:2em;
+}
+
+
+.submit-prequest-form textarea {
+    padding-left:7px;
+}
+
 .prayer-card-add {
     background-color:#7dafce;
     box-shadow: 1.5px 1.5px 1.5px rgb(34, 34, 34);
@@ -91,7 +101,9 @@ center {
     border-radius:3px;
     border:.5px solid black;
     width:70%;
-    padding-left:10px;
+    padding-left:7px;
+    height:2em;
+    margin-left:5px;
 }
 
 .submit-need-button {
@@ -107,6 +119,10 @@ center {
 .submit-need-form {
     display:flex;
     flex-direction:column;
+}
+
+.submit-need-form input {
+    padding-left:7px;
 }
 
 

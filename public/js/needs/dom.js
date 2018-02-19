@@ -20,6 +20,7 @@ const dom = function () {
       </div>
     </div>`;
     domString += listOfneeds.map((request) => {
+      console.log(request.body);
       return `
       <div data-id = '${request.id}' class="card prayer-card">
             <div class="card-body">
@@ -27,7 +28,7 @@ const dom = function () {
                 <p class="card-text">
                     ${request.body}
                     <div class='prayer-author'>
-                        <b>Posted by: ${request.author}</b>
+                        <b>Posted by: ${request.author.name}</b>
                     </div>
                     <br>
                     ${moment(request.created).calendar()}
@@ -48,7 +49,8 @@ const dom = function () {
     let commentString = '';
     if (request.comments.length) {
       request.comments.forEach((comment) => {
-        commentString += `<li class='need-comment list-group-item'><b>${comment.author}</b> : ${comment.message} -- <i>${moment(request.created).calendar()}</i></li>`;
+        console.log(comment);
+        commentString += `<li class='need-comment list-group-item'><b>${comment.author}</b> : ${comment.body} -- <i>${moment(request.created).calendar()}</i></li>`;
       });
     }
 
@@ -58,7 +60,7 @@ const dom = function () {
               <p class="card-text">
                   ${request.body}
                   <div class='prayer-author'>
-                      <b>Posted by: ${request.author}</b>
+                      <b>Posted by: ${request.author.name}</b>
                   </div>
                   <br>
                   ${moment(request.created).calendar()}
@@ -137,7 +139,7 @@ const dom = function () {
       const message =  $('.need-comment-input').val();
       const id = $(event.target).closest('.individual-prayer-card').attr('data-id');
       api.addComment(id,{message},(response) => {
-        store.currentNeed.comments.push({'message':message, author:'Evan Garrett'});
+        store.currentNeed.comments.push({'body':message, author:'Jimmy Thorton'});
         dom.render(store.currentNeed);
       });
     });

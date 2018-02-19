@@ -6,6 +6,11 @@ const api = function () {
     $.getJSON('/api/needs', callback);
   };
 
+
+  const fetchById = (id, callback) => {
+    $.getJSON('/api/needs/'+ id, callback);
+  };
+
   const createNeed = (data,callback) => {
     $.ajax({
       url:'/api/needs',
@@ -41,7 +46,8 @@ const api = function () {
     fetch,
     createNeed,
     deleteNeed,
-    addComment
+    addComment,
+    fetchById
   };
 
 }();

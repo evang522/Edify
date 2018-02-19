@@ -14,8 +14,9 @@ const NeedSchema = new mongoose.Schema({
     default:false
   },
   author: {
-    type:String,
-    default:'Jim Bob',
+    type: mongoose.Schema.Types.ObjectId,
+    ref:'User',
+    default:'000000000000000000000000'
   },
   comments: [],
   created: {

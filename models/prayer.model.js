@@ -23,8 +23,9 @@ const prayerSchema = new mongoose.Schema({
     default:Date.now
   },
   author: {
-    type:String,
-    default:'Evan Garrett'
+    type: mongoose.Schema.Types.ObjectId,
+    ref:'User',
+    default:'000000000000000000000000'
   },
   comments: {
     type:Array,

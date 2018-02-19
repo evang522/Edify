@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const Need = require('../models/need.model');
+const convertUrl = require('../js/urlconverter');
 
 
 //===========GET ROUTE==========================================>
 
 router.get('/needs', (req,res,next) => {
   Need.find()
+    .populate('author')
     .sort({created:-1})
     .then(response => {
       res.json(response);
@@ -23,6 +25,7 @@ router.get('/needs/:id', (req,res,next) => {
   const {id} = req.params;
   
   Need.findById(id)
+    .populate('author')
     .then(response => {
       if (response === null) {
         const err = new Error('Post with this ID could not be found');
@@ -46,12 +49,16 @@ router.post('/needs/', (req,res,next) => {
       err.status = 400;
       return next(err);
     }
-    newPost[field] = req.body[field];
+    newPost[field] = convertUrl(req.body[field]);
   });
 
   Need.create(newPost)
     .then(response => {
-      res.status(201).json(response);
+      return Need.findById(response.id)
+        .populate('author')
+        .then((need) => {
+          res.status(201).json(need);
+        });
     })
     .catch(next);
 
@@ -65,7 +72,7 @@ router.put('/needs/:id', (req,res,next) => {
 
   updateableFields.forEach(field => {
     if (field in req.body) {
-      updateObj[field] = req.body[field];
+      updateObj[field] = convertUrl(req.body[field]);
     }
   });
   
@@ -76,7 +83,11 @@ router.put('/needs/:id', (req,res,next) => {
         err.status = 404;
         return next(err);
       }
-      res.status(201).json(response);
+      return Need.findById(response.id)
+        .populate('author')
+        .then((need) => {
+          res.status(200).json(need);
+        });
     })
     .catch(next);
 
@@ -97,9 +108,11 @@ router.delete('/needs/:id', (req,res,next) => {
 });
 
 router.put('/needs/comments/:id', (req,res,next) => {
+
+  console.log(req.body);
   const {id} = req.params;
   const comment = {
-    body:req.body.body,
+    body:req.body.message,
     author:'Jimmy Thorton',
     created: Date.now()
   };
@@ -112,7 +125,11 @@ router.put('/needs/comments/:id', (req,res,next) => {
 
   Need.findByIdAndUpdate(id, {$push: {comments: comment}}, {new:true})
     .then(response => {
-      res.status(201).json(response);
+      return Need.findById(response.id )
+        .populate('author')
+        .then((need) => {
+          res.status(200).json(need);
+        });
     })
     .catch(next);
 });
