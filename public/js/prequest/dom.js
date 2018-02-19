@@ -49,7 +49,7 @@ const dom = function () {
     let commentString = '';
     if (request.comments.length) {
       request.comments.forEach((comment) => {
-        commentString += `<li class='prequest-comment list-group-item'><b>${comment.author.name}</b> : ${comment.message} -- <i>${moment(request.created).calendar()}</i></li>`;
+        commentString += `<li class='prequest-comment list-group-item'><b>${comment.author}</b> : ${comment.message} -- <i>${moment(request.created).calendar()}</i></li>`;
       });
     }
 

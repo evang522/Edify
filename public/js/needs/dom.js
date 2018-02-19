@@ -34,7 +34,7 @@ const dom = function () {
                     ${moment(request.created).calendar()}
                     <br>
                     <br>
-                <a href="/prayer" class="btn btn-info view-request">View</a>
+                <a href='/churchneeds' class="btn btn-info view-request">View</a>
             </div>
         </div>`;
     });
@@ -49,7 +49,6 @@ const dom = function () {
     let commentString = '';
     if (request.comments.length) {
       request.comments.forEach((comment) => {
-        console.log(comment);
         commentString += `<li class='need-comment list-group-item'><b>${comment.author}</b> : ${comment.body} -- <i>${moment(request.created).calendar()}</i></li>`;
       });
     }
@@ -66,7 +65,7 @@ const dom = function () {
                   ${moment(request.created).calendar()}
                   <br>
                   <br>
-              <a href="/prayer" class="btn btn-info js-back-to-main-button">Back</a>
+              <a href="/churchneeds" class="btn btn-info js-back-to-main-button">Back</a>
               <a href="/prayer" class="btn btn-danger js-delete-need">Delete</a>
           </div>
           <div class=need-comments>
