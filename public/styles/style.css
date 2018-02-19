@@ -8,7 +8,7 @@
     margin:1em;
 }
 
-.prayer-card {
+.edify-card {
     min-width:30% !important;
     width:25%;
 }
@@ -129,7 +129,14 @@ center {
 
 @media only screen and (max-width: 700px) {
 
-    .prayer-card {
+    .edify-card {
         min-width:95% !important;
     }
 } 
+
+@media only screen and (min-width: 1000px) {
+    .individual-card {
+        margin:0 auto;
+        width:80%;
+    }
+}

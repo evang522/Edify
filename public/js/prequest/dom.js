@@ -7,7 +7,8 @@ const dom = function () {
 
   const generatePrequestString = (listOfPrequests) => {
     let domString = '';
-    domString += `<div class="card prayer-card prayer-card-add">
+    domString += 
+    `<div class="card edify-card prayer-card-add">
       <div class="card-body">
         <h5 class="card-title">Add Prayer Request</h4>
         <form class='submit-prequest-form'>
@@ -19,18 +20,14 @@ const dom = function () {
         </form>
       </div>
     </div>`;
-    domString += listOfPrequests.map((request) => {
-      console.log(request);
-      return `
-      <div data-id = '${request.id}' class="card prayer-card">
+    listOfPrequests.forEach((request) => {
+      domString += `<div data-id = '${request.id}' class="card edify-card">
             <div class="card-body">
                 <h5 class="card-title">${request.title}</h4>
                 <p class="card-text">
-                    ${request.requestbody}
                     <div class='prayer-author'>
                         <b>Posted by: ${request.author.name}</b>
                     </div>
-                    <br>
                     ${moment(request.created).calendar()}
                     <br>
                     <br>
@@ -61,7 +58,6 @@ const dom = function () {
                   <div class='prayer-author'>
                       <b>Posted by: ${request.author.name}</b>
                   </div>
-                  <br>
                   ${moment(request.created).calendar()}
                   <br>
                   <br>
@@ -122,7 +118,7 @@ const dom = function () {
     $('.prequest-container').on('click', '.view-request', (event) => {
 
       event.preventDefault();
-      let id =  $(event.target).closest('.prayer-card').attr('data-id');
+      let id =  $(event.target).closest('.edify-card').attr('data-id');
       let currentRequest = store.prequests.find((request) => {
         return request.id === id;
       });
