@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const IndividualNeedSchema = new mongoose.Schema({
+const NeedSchema = new mongoose.Schema({
   title: {
     type:String,
     required:true
@@ -25,7 +25,7 @@ const IndividualNeedSchema = new mongoose.Schema({
 });
 
 
-IndividualNeedSchema.set('toObject', {
+NeedSchema.set('toObject', {
 
   transform: function (doc,ret) {
     ret.id = ret._id;
@@ -36,4 +36,4 @@ IndividualNeedSchema.set('toObject', {
 
 
 
-module.exports = mongoose.model('Individualneeds', IndividualNeedSchema);
+module.exports = mongoose.model('needs', NeedSchema);

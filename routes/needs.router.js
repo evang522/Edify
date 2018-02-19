@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const IndividualNeed = require('../models/individualneed.model');
+const Need = require('../models/need.model');
 
 
 //===========GET ROUTE==========================================>
 
-router.get('/individualneeds', (req,res,next) => {
-  IndividualNeed.find()
+router.get('/needs', (req,res,next) => {
+  Need.find()
     .sort({created:-1})
     .then(response => {
       res.json(response);
@@ -19,10 +19,10 @@ router.get('/individualneeds', (req,res,next) => {
 
 //================GET BY ID ROUTE==================================>
 
-router.get('/individualneeds/:id', (req,res,next) => {
+router.get('/needs/:id', (req,res,next) => {
   const {id} = req.params;
   
-  IndividualNeed.findById(id)
+  Need.findById(id)
     .then(response => {
       if (response === null) {
         const err = new Error('Post with this ID could not be found');
@@ -37,7 +37,7 @@ router.get('/individualneeds/:id', (req,res,next) => {
 });
 
 //================================= CREATE ROUTE=======================>
-router.post('/individualneeds/', (req,res,next) => {
+router.post('/needs/', (req,res,next) => {
   const requiredField = ['title','body'];
   const newPost = {};
   requiredField.forEach((field) => {
@@ -49,7 +49,7 @@ router.post('/individualneeds/', (req,res,next) => {
     newPost[field] = req.body[field];
   });
 
-  IndividualNeed.create(newPost)
+  Need.create(newPost)
     .then(response => {
       res.status(201).json(response);
     })
@@ -58,7 +58,7 @@ router.post('/individualneeds/', (req,res,next) => {
 });
 
 
-router.put('/individualneeds/:id', (req,res,next) => {
+router.put('/needs/:id', (req,res,next) => {
   const {id} = req.params;
   const updateableFields = ['title','body'];
   const updateObj = {};
@@ -69,7 +69,7 @@ router.put('/individualneeds/:id', (req,res,next) => {
     }
   });
   
-  IndividualNeed.findByIdAndUpdate(id,updateObj, {new:true})
+  Need.findByIdAndUpdate(id,updateObj, {new:true})
     .then(response => {
       if (response === null) {
         const err = new Error('Post with this ID could not be found');
@@ -82,7 +82,21 @@ router.put('/individualneeds/:id', (req,res,next) => {
 
 });
 
-router.put('/individualneeds/comments/:id', (req,res,next) => {
+router.delete('/needs/:id', (req,res,next) => {
+  const {id} = req.params;
+
+  Need.findByIdAndRemove(id)
+    .then(response => {
+      if (response === null) {
+        const err = new Error('Post with this ID could not be found');
+        err.status = 404;
+        return next(err);
+      }
+      res.status(204).end();
+    });
+});
+
+router.put('/needs/comments/:id', (req,res,next) => {
   const {id} = req.params;
   const comment = {
     body:req.body.body,
@@ -96,7 +110,7 @@ router.put('/individualneeds/comments/:id', (req,res,next) => {
     return next(err);
   }
 
-  IndividualNeed.findByIdAndUpdate(id, {$push: {comments: comment}}, {new:true})
+  Need.findByIdAndUpdate(id, {$push: {comments: comment}}, {new:true})
     .then(response => {
       res.status(201).json(response);
     })

@@ -10,7 +10,7 @@ const path = require('path');
 
 // Define Routes
 const prayerRouter = require('./routes/prayer.router');
-const individualNeedsRouter = require('./routes/individualneeds.router');
+const NeedsRouter = require('./routes/needs.router');
 
 // Set Middleware
 app.use(express.json());
@@ -22,7 +22,7 @@ app.use(express.static('public'));
 
 // Mount Routes
 app.use('/api', prayerRouter);
-app.use('/api', individualNeedsRouter);
+app.use('/api', NeedsRouter);
 
 // Redirect traffic from main route to home 
 app.get('/', (req,res) => {
@@ -37,6 +37,10 @@ app.get('/home', (req,res,next) => {
 // Prayer request View Route
 app.get('/prayer', (req,res,next) => {
   res.sendFile(path.join(__dirname + '/views/prayer.html'));
+});
+
+app.get('/churchneeds', (req,res,next) => {
+  res.sendFile('needs.html', {root: './views'});
 });
 
 
