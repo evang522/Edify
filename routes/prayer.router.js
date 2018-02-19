@@ -10,6 +10,7 @@ router.get('/prequests', (req,res,next) => {
   const projection = {};
 
   Prayer.find(filter, projection)
+    .sort({created:-1})
     .then((prequests) => {
       res.json(prequests);
     })

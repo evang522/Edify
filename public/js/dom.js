@@ -1,6 +1,6 @@
 // This page exists to take care of dom-related functions: i.e. generating HTML strings, updating views, etc.
 
-/*global store api dom */
+/*global store api moment dom */
 
 const dom = function () {
 
@@ -48,7 +48,7 @@ const dom = function () {
     let commentString = '';
     if (request.comments.length) {
       request.comments.forEach((comment) => {
-        commentString += `<li class='prequest-comment list-group-item'>${comment.author} : ${comment.message} -- <i>${moment(request.created).calendar()}</i></li>`;
+        commentString += `<li class='prequest-comment list-group-item'><b>${comment.author}</b> : ${comment.message} -- <i>${moment(request.created).calendar()}</i></li>`;
       });
     }
 
@@ -101,7 +101,7 @@ const dom = function () {
       };
       // Send to Server
       api.createPrequest(newItem, (data) => {
-        store.prequests.push(data);
+        store.prequests.unshift(data);
         let domString = dom.generatePrequestString(store.prequests);
         dom.renderPrequests(domString);
       });
