@@ -155,8 +155,16 @@ const dom = function () {
       const message =  $('.need-comment-input').val();
       const id = $(event.target).closest('.individual-prayer-card').attr('data-id');
       api.addComment(id,{message},(response) => {
-        store.currentNeed.comments.push({'body':message, author:'Jimmy Thorton'});
-        dom.render(store.currentNeed);
+        api.fetch((data) => {
+          store.needs = data;
+          store.currentNeed = store.needs.find((need) => {
+            return need.id === id;
+          });
+          dom.render(store.currentNeed);
+          $('.need-comment-input').focus();
+        });
+        // store.currentNeed.comments.push({'body':message, author:'Jimmy Thorton'});
+        // dom.render(store.currentNeed);
       });
     });
   };
