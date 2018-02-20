@@ -9,6 +9,7 @@ const convertUrl = require('../js/urlconverter');
 router.get('/needs', (req,res,next) => {
   Need.find()
     .populate('author')
+    .populate('comments.author')
     .sort({created:-1})
     .then(response => {
       res.json(response);
@@ -107,14 +108,10 @@ router.delete('/needs/:id', (req,res,next) => {
     });
 });
 
-router.put('/needs/comments/:id', (req,res,next) => {
-
-  console.log(req.body);
+router.put('/needs/:id/comments/', (req,res,next) => {
   const {id} = req.params;
   const comment = {
     body:req.body.message,
-    author:'Jimmy Thorton',
-    created: Date.now()
   };
 
   if (!comment.body) {
@@ -124,6 +121,22 @@ router.put('/needs/comments/:id', (req,res,next) => {
   }
 
   Need.findByIdAndUpdate(id, {$push: {comments: comment}}, {new:true})
+    .then(response => {
+      return Need.findById(response.id)
+        .populate('author')
+        .then((need) => {
+          res.status(200).json(need);
+        });
+    })
+    .catch(next);
+});
+
+
+router.delete('/needs/:id/commentid/:commentid', (req,res,next) => {
+  const {id} = req.params;
+  const {commentid} = req.params;
+
+  Need.findByIdAndUpdate(id, {$pull: {comments: {'_id':commentid}}}, {new:true})
     .then(response => {
       return Need.findById(response.id )
         .populate('author')

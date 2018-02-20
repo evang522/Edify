@@ -1,5 +1,21 @@
 const mongoose = require('mongoose');
 
+const commentSchema = new mongoose.Schema({
+  body: {
+    type:String,
+  },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref:'User',
+    default:'000000000000000000000000'
+  },
+  created: {
+    type:Date,
+    default: Date.now
+  }
+});
+
+
 const NeedSchema = new mongoose.Schema({
   title: {
     type:String,
@@ -18,7 +34,7 @@ const NeedSchema = new mongoose.Schema({
     ref:'User',
     default:'000000000000000000000000'
   },
-  comments: [],
+  comments: [commentSchema],
   created: {
     type: Date,
     default: Date.now

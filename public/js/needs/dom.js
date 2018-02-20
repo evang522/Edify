@@ -48,7 +48,7 @@ const dom = function () {
     let commentString = '';
     if (request.comments.length) {
       request.comments.forEach((comment) => {
-        commentString += `<li class='need-comment list-group-item'><b>${comment.author}</b> : ${comment.body} -- <i>${moment(request.created).calendar()}</i></li>`;
+        commentString += `<li data-id='${comment._id}'class='need-comment list-group-item'><b>${comment.author.name}</b> : ${comment.body} -- <i>${moment(request.created).calendar()}</i>&nbsp&nbsp&nbsp<button class='btn delete-comment clearfix float-right btn-sm btn-danger'>X</button></li>`;
       });
     }
 
@@ -69,7 +69,7 @@ const dom = function () {
           <div class=need-comments>
           <form class='need-comment-form'>
             <label for='need-comment-input'>Add Comment:</label>
-            <input id = 'need-comment-input' class='need-comment-input'>
+            <input id = 'need-comment-input' placeholder='Press Enter to Submit...' class='need-comment-input'>
           </form>
           <ul class="list-group need-comment bg-info">
          </ul>
@@ -108,6 +108,25 @@ const dom = function () {
     });
   };
 
+
+  const handleDeleteComment = () => {
+    $('.individual-need-view').on('click', '.delete-comment', (event) => {
+      event.preventDefault();
+      const needId = $(event.target).closest('.individual-prayer-card').attr('data-id');
+      const commentId = $(event.target).closest('li').attr('data-id');
+
+      api.deleteComment(needId,commentId, (response) => {
+        store.currentNeed.comments = store.currentNeed.comments.filter((need) => {
+          return need._id !== commentId; 
+        });
+        store.needs = store.needs.filter((need) => {
+          return need.id !== needId;
+        });
+        render();
+      });
+
+    });
+  };  
 
   const handleReturnToMainNeed = () => {
     $('.view-request').on('click','.js-back-to-main-button', (event) => {
@@ -148,7 +167,6 @@ const dom = function () {
       const id = $(event.target).closest('.individual-prayer-card').attr('data-id');
 
       api.deleteNeed(id, (response) => {
-        console.log(response);
         store.currentNeed = '';
         store.needs = store.needs.filter((request) => {
           return request.id !== id;
@@ -175,6 +193,7 @@ const dom = function () {
     handleReturnToMainNeed();
     handleNewComment();
     handleDeleteNeed();
+    handleDeleteComment();
   };
 
   return{

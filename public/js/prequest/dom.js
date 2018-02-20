@@ -46,7 +46,7 @@ const dom = function () {
     let commentString = '';
     if (request.comments.length) {
       request.comments.forEach((comment) => {
-        commentString += `<li class='prequest-comment list-group-item'><b>${comment.author}</b> : ${comment.message} -- <i>${moment(request.created).calendar()}</i></li>`;
+        commentString += `<li class='prequest-comment list-group-item'><b>${comment.author}</b> : ${comment.message} -- <i>${moment(request.created).calendar()}</i>&nbsp&nbsp&nbsp<button class='btn  clearfix float-right btn-sm btn-danger'>X</button></li>`;
       });
     }
 
@@ -67,7 +67,7 @@ const dom = function () {
           <div class=prequest-comments>
           <form class='prequest-comment-form'>
             <label for='prequest-comment-input'>Add Comment:</label>
-            <input id = 'prequest-comment-input' class='prequest-comment-input'>
+            <input id = 'prequest-comment-input' placeholder='Press Enter to Submit...' class='prequest-comment-input'>
           </form>
           <ul class="list-group prequest-comment bg-info">
          </ul>

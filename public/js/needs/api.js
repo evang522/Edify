@@ -33,10 +33,19 @@ const api = function () {
 
   const addComment = (id,data,callback) => {
     $.ajax({
-      url:'/api/needs/comments/'+id,
+      url:`/api/needs/${id}/comments/`,
       contentType:'application/json',
       type:'PUT',
       data: JSON.stringify(data),
+      success:callback
+    });
+  };
+
+  const deleteComment = (id,commentid,callback) => {
+    $.ajax({
+      url:`/api/needs/${id}/commentid/${commentid}`,
+      type:'DELETE',
+      contentType:'application/json',
       success:callback
     });
   };
@@ -47,7 +56,7 @@ const api = function () {
     createNeed,
     deleteNeed,
     addComment,
-    fetchById
+    deleteComment
   };
 
 }();
