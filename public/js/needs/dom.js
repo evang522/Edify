@@ -174,7 +174,7 @@ const dom = function () {
       event.preventDefault();
       const id = $(event.target).closest('.individual-prayer-card').attr('data-id');
 
-      api.deleteNeed(id, (response) => {
+      api.deleteNeed(id, () => {
         store.currentNeed = '';
         store.needs = store.needs.filter((request) => {
           return request.id !== id;
