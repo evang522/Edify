@@ -26,25 +26,6 @@ app.use('/api', prayerRouter);
 app.use('/api', NeedsRouter);
 app.use('/api', userRouter);
 
-// Redirect traffic from main route to home 
-app.get('/', (req,res) => {
-  res.redirect('/home');
-});
-
-// Home Router
-app.get('/home', (req,res,next) => {
-  res.sendFile(path.join(__dirname +'/views/index.html'));
-});
-
-// Prayer request View Route
-app.get('/prayer', (req,res,next) => {
-  res.sendFile(path.join(__dirname + '/views/prayer.html'));
-});
-
-app.get('/churchneeds', (req,res,next) => {
-  res.sendFile('needs.html', {root: './views'});
-});
-
 
 
 // App-Wide Error Handler
